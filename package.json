@@ -3,14 +3,19 @@
   "version": "1.0.0",
   "description": "Keep track of income and expenses. Add and remove items and save to local storage",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack serve --open",
+    "build": "webpack --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "css-loader": "^6.7.2",
     "cypress": "^11.2.0",
     "json-server": "^0.17.1",
+    "style-loader": "^3.3.1",
     "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.0"
+    "webpack-cli": "^5.0.0",
+    "webpack-dev-server": "^4.11.1"
   }
 }
