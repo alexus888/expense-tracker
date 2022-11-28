@@ -9,15 +9,21 @@ const text = document.getElementById('text');
 const amount = document.getElementById('amount');
 
 
-const localStorageTransactions = JSON.parse(
-  localStorage.getItem('transactions')
-);
+let localStorageTransactions = []
 
-let transactions =
-  localStorage.getItem('transactions') !== null ? localStorageTransactions : [];
+let response = await fetch('http://localhost:3000/transactions');
+if (response.ok) {
+  let json = await response.json();
+  localStorageTransactions = json;
+} else {
+  alert(`HTTP error: ${response.status}`);
+}
+
+
+let transactions = localStorageTransactions;
 
 // Add transaction
-function addTransaction(e) {
+async function addTransaction(e) {
   e.preventDefault();
 
   if (text.value.trim() === '' || amount.value.trim() === '') {
@@ -29,16 +35,28 @@ function addTransaction(e) {
       amount: +amount.value
     };
 
-    transactions.push(transaction);
+    let response = await fetch(`http://localhost:3000/transactions`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(transaction)
+    });
 
-    addTransactionDOM(transaction);
+    if (response.ok) {
+        transactions.push(transaction);
 
-    updateValues();
+        addTransactionDOM(transaction);
 
-    updateLocalStorage();
+        updateValues();
 
-    text.value = '';
-    amount.value = '';
+        updateLocalStorage();
+
+        text.value = '';
+        amount.value = '';
+    } else {
+        alert(`HTTP error: ${response.status}`); 
+    }
   }
 }
 
@@ -96,12 +114,19 @@ function updateValues() {
 }
 
 // Remove transaction by ID
-function removeTransaction(id) {
-  transactions = transactions.filter(transaction => transaction.id !== id);
+async function removeTransaction(id) {
+  
+  const url = `http://localhost:3000/transactions/${id}`;
+  let response = await fetch(url, { method: 'DELETE' });
 
-  updateLocalStorage();
+  if (response.ok) {
+      transactions = transactions.filter(transaction => transaction.id !== id);
+      updateLocalStorage();
+      init();
+  } else {
+      alert(`HTTP error: ${response.status}`);
+  }
 
-  init();
 }
 
 // Update local storage transactions
