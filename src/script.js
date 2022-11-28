@@ -1,3 +1,5 @@
+import './style.css';
+
 const balance = document.getElementById('balance');
 const money_plus = document.getElementById('money-plus');
 const money_minus = document.getElementById('money-minus');
@@ -6,12 +8,6 @@ const form = document.getElementById('form');
 const text = document.getElementById('text');
 const amount = document.getElementById('amount');
 
-// const dummyTransactions = [
-//   { id: 1, text: 'Flower', amount: -20 },
-//   { id: 2, text: 'Salary', amount: 300 },
-//   { id: 3, text: 'Book', amount: -10 },
-//   { id: 4, text: 'Camera', amount: 150 }
-// ];
 
 const localStorageTransactions = JSON.parse(
   localStorage.getItem('transactions')
@@ -61,13 +57,19 @@ function addTransactionDOM(transaction) {
   // Add class based on value
   item.classList.add(transaction.amount < 0 ? 'minus' : 'plus');
 
-  item.innerHTML = `
-    ${transaction.text} <span>${sign}${Math.abs(
-    transaction.amount
-  )}</span> <button class="delete-btn" onclick="removeTransaction(${
-    transaction.id
-  })">x</button>
-  `;
+  const span = document.createElement("span");
+  span.innerText = `${sign}${Math.abs(transaction.amount)}`;
+
+  const button = document.createElement("button");
+  button.classList = ["delete-btn"]
+  button.innerText = 'x';
+  button.onclick = () => {
+    removeTransaction(transaction.id);
+  }
+
+  item.innerText = `${transaction.text}`;
+  item.appendChild(span);
+  item.appendChild(button)
 
   list.appendChild(item);
 }

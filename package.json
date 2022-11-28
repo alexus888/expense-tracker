@@ -4,7 +4,7 @@
   "description": "Keep track of income and expenses. Add and remove items and save to local storage",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack serve --open",
+    "serve": "webpack serve --open",
     "build": "webpack --config webpack.config.js"
   },
   "author": "",
