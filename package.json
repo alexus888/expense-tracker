@@ -1,25 +1,27 @@
 {
-  "name": "expense-tracker",
-  "version": "1.0.0",
-  "description": "Keep track of income and expenses. Add and remove items and save to local storage",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "serve-db": "json-server --watch db.json",
-    "serve-ui": "webpack serve --open",
-    "build": "webpack --config webpack.config.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "^7.20.5",
-    "@babel/preset-env": "^7.20.2",
-    "babel-loader": "^9.1.0",
-    "css-loader": "^6.7.2",
-    "cypress": "^11.2.0",
-    "json-server": "^0.17.1",
-    "style-loader": "^3.3.1",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.0",
-    "webpack-dev-server": "^4.11.1"
-  }
+    "name": "expense-tracker",
+    "version": "1.0.0",
+    "description": "Keep track of income and expenses. Add and remove items and save to local storage",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "serve-db": "json-server --watch db.json",
+        "serve-ui": "webpack serve --open",
+        "build": "webpack --config webpack.config.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@babel/core": "^7.20.5",
+        "@babel/preset-env": "^7.20.2",
+        "babel-loader": "^9.1.0",
+        "css-loader": "^6.7.2",
+        "cypress": "^11.2.0",
+        "json-server": "^0.17.1",
+        "lowdb": "^5.0.5",
+        "style-loader": "^3.3.1",
+        "typescript": "^4.9.3",
+        "webpack": "^5.75.0",
+        "webpack-cli": "^5.0.0",
+        "webpack-dev-server": "^4.11.1"
+    }
 }
