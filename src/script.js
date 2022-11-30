@@ -1,4 +1,5 @@
 import './style.css';
+import { v4 as uuidv4 } from 'uuid';
 
 const balance = document.getElementById('balance');
 const money_plus = document.getElementById('money-plus');
@@ -60,9 +61,9 @@ async function addTransaction(e) {
   }
 }
 
-// Generate random ID
+
 function generateID() {
-  return Math.floor(Math.random() * 100000000);
+  return uuidv4();
 }
 
 // Add transactions to DOM list
