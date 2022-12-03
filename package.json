@@ -3,10 +3,10 @@
     "version": "1.0.0",
     "description": "Keep track of income and expenses. Add and remove items and save to local storage",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "serve-db": "json-server --watch db.json",
         "serve-ui": "webpack serve --open",
-        "build": "webpack --config webpack.config.js"
+        "build": "webpack --config webpack.config.js",
+        "test": "cypress run"
     },
     "author": "",
     "license": "ISC",
