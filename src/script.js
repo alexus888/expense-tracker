@@ -81,6 +81,7 @@ function addTransactionDOM(transaction) {
 
   const button = document.createElement("button");
   button.classList = ["delete-btn"]
+  button.setAttribute('data-selector', `remove-transaction-${transaction.id}`);
   button.innerText = 'x';
   button.onclick = () => {
     removeTransaction(transaction.id);
