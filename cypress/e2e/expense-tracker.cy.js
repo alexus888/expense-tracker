@@ -33,7 +33,7 @@ describe('Expense Tracker', () => {
 
   it('allows a user to delete transactions from the history', () => {
     // arrange  
-    cy.addTransaction("direct deposit", "1000");
+    cy.addTransaction("direct deposit", "1000").then(id => cy.wrap(id).as('directDeposit'));
     cy.addTransaction("long island", "-5").then(id => cy.wrap(id).as('longIslandId'));
     cy.addTransaction("rum and coke", "-3").then(id => cy.wrap(id).as('rumAndCokeId'));
     cy.addTransaction("whiskey sour", "-3");
@@ -59,5 +59,15 @@ describe('Expense Tracker', () => {
     cy.checkTransactionCount(2);
     cy.checkTotals(1000, -3);
     cy.get('[data-selector="history"]').contains('long island').should('not.exist');
+
+    // act 3
+    cy.get('@directDeposit').then(id => {
+      cy.removeTransaction(id);
+    });
+
+    // assert 3
+    cy.checkTransactionCount(1);
+    cy.checkTotals(0, -3);
+    cy.get('[data-selector="history"]').contains('direct deposit').should('not.exist');
   });
 });
