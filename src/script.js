@@ -8,20 +8,17 @@ const list = document.getElementById('list');
 const form = document.getElementById('form');
 const text = document.getElementById('text');
 const amount = document.getElementById('amount');
+let transactions = []
 
-
-let localStorageTransactions = []
 
 let response = await fetch('http://localhost:3000/transactions');
 if (response.ok) {
   let json = await response.json();
-  localStorageTransactions = json;
+  transactions = json;
 } else {
   alert(`HTTP error: ${response.status}`);
 }
 
-
-let transactions = localStorageTransactions;
 
 // Add transaction
 async function addTransaction(e) {
@@ -31,7 +28,7 @@ async function addTransaction(e) {
     alert('Please add a text and amount');
   } else {
     const transaction = {
-      id: generateID(),
+      id: uuidv4(),
       text: text.value,
       amount: +amount.value
     };
@@ -49,9 +46,7 @@ async function addTransaction(e) {
 
         addTransactionDOM(transaction);
 
-        updateValues();
-
-        updateLocalStorage();
+        updateTotals();
 
         text.value = '';
         amount.value = '';
@@ -61,10 +56,6 @@ async function addTransaction(e) {
   }
 }
 
-
-function generateID() {
-  return uuidv4();
-}
 
 // Add transactions to DOM list
 function addTransactionDOM(transaction) {
@@ -95,7 +86,7 @@ function addTransactionDOM(transaction) {
 }
 
 // Update the balance, income and expense
-function updateValues() {
+function updateTotals() {
   const amounts = transactions.map(transaction => transaction.amount);
 
   const total = amounts.reduce((acc, item) => (acc += item), 0).toFixed(2);
@@ -123,7 +114,6 @@ async function removeTransaction(id) {
 
   if (response.ok) {
       transactions = transactions.filter(transaction => transaction.id !== id);
-      updateLocalStorage();
       init();
   } else {
       alert(`HTTP error: ${response.status}`);
@@ -131,17 +121,13 @@ async function removeTransaction(id) {
 
 }
 
-// Update local storage transactions
-function updateLocalStorage() {
-  localStorage.setItem('transactions', JSON.stringify(transactions));
-}
 
 // Init app
 function init() {
   list.innerHTML = '';
 
   transactions.forEach(addTransactionDOM);
-  updateValues();
+  updateTotals();
 }
 
 init();
