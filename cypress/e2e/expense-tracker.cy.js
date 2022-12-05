@@ -1,10 +1,14 @@
 describe('Expense Tracker', () => {
   before(() => {
-    cy.exec("node cypress/e2e/tearDown.mjs");
+    cy.exec("poetry run utilities clean-db");
   });
 
   beforeEach(() => {
       cy.visit('http://localhost:8080')
+  });
+
+  afterEach(() => {
+    cy.exec("poetry run utilities clean-db");
   });
 
   it('allows a user to add some text and an amount and save it as a transaction', () => {
@@ -55,9 +59,5 @@ describe('Expense Tracker', () => {
     cy.checkTransactionCount(2);
     cy.checkTotals(1000, -3);
     cy.get('[data-selector="history"]').contains('long island').should('not.exist');
-  });
-
-  afterEach(() => {
-    cy.exec("node cypress/e2e/tearDown.mjs");
   });
 });

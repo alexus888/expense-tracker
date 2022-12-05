@@ -17,6 +17,13 @@ def get_totals():
     click.echo(json.dumps({"balance": balance, "income": income, "expense": expense}))
 
 
+@main.command
+def clean_db():
+    json_db_path = dirname(dirname(dirname(__file__)))  # TODO make this less janky
+    with open(join(json_db_path, "db.json"), "w") as file:
+        json.dump({"transactions": []}, file)
+
+
 def get_transactions():
     json_db_path = dirname(dirname(dirname(__file__)))  # TODO make this less janky
     with open(join(json_db_path, "db.json"), "r") as file:
