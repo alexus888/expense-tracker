@@ -3,3 +3,5 @@ dist/bundle.js
 db.json
 cypress/screenshots
 cypress/videos
+*.pyc
+__pycache__
