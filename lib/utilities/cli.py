@@ -14,7 +14,8 @@ def get_totals():
     balance = sum([t.get("amount") for t in transactions])
     income = sum([t.get("amount") for t in transactions if t.get("amount") > 0])
     expense = sum([t.get("amount") for t in transactions if t.get("amount") < 0])
-    click.echo(json.dumps({"balance": balance, "income": income, "expense": expense}))
+    count = len(transactions)
+    click.echo(json.dumps({"balance": balance, "income": income, "expense": expense, "count": count}))
 
 
 @main.command

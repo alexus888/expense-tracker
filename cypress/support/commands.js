@@ -10,8 +10,8 @@ Cypress.Commands.add('addTransaction', (text, amount) => {
 
 Cypress.Commands.add('checkTransactionCount', count => {
     cy.get('[data-selector="history"]').find('li').should('have.length', count);
-    cy.exec("node cypress/e2e/getCounts.mjs").then(result => {
-        expect(JSON.parse(result.stdout).length).to.eq(count);
+    cy.exec("poetry run utilities get-totals").then(result => {
+        expect(JSON.parse(result.stdout).count).to.eq(count);
     });
 });
 
