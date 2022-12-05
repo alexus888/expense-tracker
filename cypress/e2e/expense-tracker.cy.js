@@ -1,4 +1,8 @@
 describe('Expense Tracker', () => {
+  before(() => {
+    cy.exec("node cypress/e2e/tearDown.mjs");
+  });
+
   beforeEach(() => {
       cy.visit('http://localhost:8080')
   });
@@ -9,6 +13,7 @@ describe('Expense Tracker', () => {
 
     // assert
     cy.checkTransactionCount(1);
+    cy.checkTotals(0, -3)
   });
 
   it('allows a user to save multiple transactions', () => {
@@ -19,6 +24,7 @@ describe('Expense Tracker', () => {
 
     // assert
     cy.checkTransactionCount(3);
+    cy.checkTotals(1000, -6);
   });
 
   it('allows a user to delete transactions from the history', () => {
@@ -28,6 +34,7 @@ describe('Expense Tracker', () => {
     cy.addTransaction("rum and coke", "-3").then(id => cy.wrap(id).as('rumAndCokeId'));
     cy.addTransaction("whiskey sour", "-3");
     cy.checkTransactionCount(4);
+    cy.checkTotals(1000, -11)
 
     // act 1
     cy.get('@rumAndCokeId').then(id => {
@@ -36,6 +43,7 @@ describe('Expense Tracker', () => {
     
     // assert 1
     cy.checkTransactionCount(3);
+    cy.checkTotals(1000, -8)
     cy.get('[data-selector="history"]').contains('rum and coke').should('not.exist');
 
     // act 2
@@ -45,6 +53,7 @@ describe('Expense Tracker', () => {
 
     // assert 2
     cy.checkTransactionCount(2);
+    cy.checkTotals(1000, -3);
     cy.get('[data-selector="history"]').contains('long island').should('not.exist');
   });
 

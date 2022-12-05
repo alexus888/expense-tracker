@@ -1,14 +1,3 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
 Cypress.Commands.add('addTransaction', (text, amount) => { 
     cy.get('[data-selector="text"]').type(text);
     cy.get('[data-selector="amount"]').type(amount);
@@ -30,15 +19,18 @@ Cypress.Commands.add('removeTransaction', id => {
     cy.get(`[data-selector="remove-transaction-${id}"]`).click()
 });
 
+Cypress.Commands.add('checkTotals', (income, expense) => {
+    // check totals from json db
+    const balance = income + expense;
+    cy.exec("poetry run utilities get-totals").then(result => {
+        const data = JSON.parse(result.stdout);
+        expect(balance).to.eq(data.income + data.expense);
+        expect(income).to.eq(data.income);
+        expect(expense).to.eq(data.expense);
+    });
 
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+    // check totals in UI
+    cy.get('[data-selector="balance"]').contains(balance);
+    cy.get('[data-selector="income"]').contains(income);
+    cy.get('[data-selector="expense"]').contains(Math.abs(expense));
+});
