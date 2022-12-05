@@ -125,11 +125,10 @@ async function removeTransaction(id) {
 // Init app
 function init() {
   list.innerHTML = '';
-
   transactions.forEach(addTransactionDOM);
   updateTotals();
+  form.addEventListener('submit', addTransaction);
 }
 
 init();
 
-form.addEventListener('submit', addTransaction);
