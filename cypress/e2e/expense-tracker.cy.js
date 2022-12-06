@@ -70,4 +70,18 @@ describe('Expense Tracker', () => {
     cy.checkTotals(0, -3);
     cy.get('[data-selector="history"]').contains('direct deposit').should('not.exist');
   });
+
+  it('loads pre-existing transactions from the database', () => {
+    // arrange
+    cy.addTransaction("aviation", "-10");
+    cy.checkTransactionCount(1);
+    cy.checkTotals(0, -10)
+
+    // act
+    cy.visit('http://localhost:8080')
+
+    // assert
+    cy.checkTransactionCount(1);
+    cy.checkTotals(0, -10)
+  });
 });

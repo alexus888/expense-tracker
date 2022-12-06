@@ -11,12 +11,14 @@ const amount = document.getElementById('amount');
 let transactions = []
 
 
-let response = await fetch('http://localhost:3000/transactions');
-if (response.ok) {
-  let json = await response.json();
-  transactions = json;
-} else {
-  alert(`HTTP error: ${response.status}`);
+const getTransactions = async () => {
+    let response = await fetch('http://localhost:3000/transactions');
+    if (response.ok) {
+        let result = await response.json();
+        return result;
+    } else {
+        alert(`HTTP error: ${response.status}`);
+    }
 }
 
 
@@ -123,7 +125,8 @@ async function removeTransaction(id) {
 
 
 // Init app
-function init() {
+async function init() {
+  transactions = await getTransactions();
   list.innerHTML = '';
   transactions.forEach(addTransactionDOM);
   updateTotals();
