@@ -3,9 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 const list = document.getElementById('list');
-const form = document.getElementById('form');
-const text = document.getElementById('text');
-const amount = document.getElementById('amount');
 let transactions = []
 
 
@@ -23,6 +20,9 @@ const getTransactions = async () => {
 // Add transaction
 async function addTransaction(e) {
   e.preventDefault();
+
+  const amount = document.getElementById('amount');
+  const text = document.getElementById('text');
 
   if (text.value.trim() === '' || amount.value.trim() === '') {
     alert('Please add a text and amount');
@@ -133,7 +133,8 @@ async function init() {
   list.innerHTML = '';
   transactions.forEach(addTransactionDOM);
   updateTotals();
-  form.addEventListener('submit', addTransaction);
+  document.getElementById('form')
+    .addEventListener('submit', addTransaction);
 }
 
 init();
