@@ -17,8 +17,7 @@ const getTransactions = async () => {
 }
 
 
-// Add transaction
-async function addTransaction(e) {
+const addTransaction = async (e) => {
   e.preventDefault();
 
   const amount = document.getElementById('amount');
@@ -43,11 +42,8 @@ async function addTransaction(e) {
 
     if (response.ok) {
         transactions.push(transaction);
-
         addTransactionDOM(transaction);
-
         updateTotals();
-
         text.value = '';
         amount.value = '';
     } else {
@@ -58,10 +54,9 @@ async function addTransaction(e) {
 
 
 // Add transactions to DOM list
-function addTransactionDOM(transaction) {
+const addTransactionDOM = (transaction) => {
   // Get sign
   const sign = transaction.amount < 0 ? '-' : '+';
-
   const item = document.createElement('li');
 
   // Add class based on value
@@ -86,7 +81,7 @@ function addTransactionDOM(transaction) {
 }
 
 // Update the balance, income and expense
-function updateTotals() {
+const updateTotals = () => {
   const balance = document.getElementById('balance');
   const income = document.getElementById('money-plus');
   const expense = document.getElementById('money-minus');
@@ -112,14 +107,16 @@ function updateTotals() {
 }
 
 // Remove transaction by ID
-async function removeTransaction(id) {
+const removeTransaction = async (id) => {
   
   const url = `http://localhost:3000/transactions/${id}`;
   let response = await fetch(url, { method: 'DELETE' });
 
   if (response.ok) {
       transactions = transactions.filter(transaction => transaction.id !== id);
-      init();
+      list.innerHTML = '';
+      transactions.forEach(addTransactionDOM);
+      updateTotals();
   } else {
       alert(`HTTP error: ${response.status}`);
   }
@@ -127,15 +124,12 @@ async function removeTransaction(id) {
 }
 
 
-// Init app
-async function init() {
-  transactions = await getTransactions();
-  list.innerHTML = '';
-  transactions.forEach(addTransactionDOM);
-  updateTotals();
-  document.getElementById('form')
+// initialize expense tracker
+transactions = await getTransactions();
+list.innerHTML = '';
+transactions.forEach(addTransactionDOM);
+updateTotals();
+document.getElementById('form')
     .addEventListener('submit', addTransaction);
-}
 
-init();
 
