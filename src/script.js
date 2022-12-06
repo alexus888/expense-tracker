@@ -2,7 +2,6 @@ import './style.css';
 import { v4 as uuidv4 } from 'uuid';
 
 
-const list = document.getElementById('list');
 let transactions = []
 
 
@@ -77,7 +76,7 @@ const addTransactionDOM = (transaction) => {
   item.appendChild(span);
   item.appendChild(button)
 
-  list.appendChild(item);
+  document.getElementById('list').appendChild(item);
 }
 
 // Update the balance, income and expense
@@ -114,19 +113,18 @@ const removeTransaction = async (id) => {
 
   if (response.ok) {
       transactions = transactions.filter(transaction => transaction.id !== id);
-      list.innerHTML = '';
+      document.getElementById('list').innerHTML = '';
       transactions.forEach(addTransactionDOM);
       updateTotals();
   } else {
       alert(`HTTP error: ${response.status}`);
   }
-
 }
 
 
 // initialize expense tracker
 transactions = await getTransactions();
-list.innerHTML = '';
+document.getElementById('list').innerHTML = '';
 transactions.forEach(addTransactionDOM);
 updateTotals();
 document.getElementById('form')
