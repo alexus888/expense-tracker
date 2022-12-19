@@ -36,9 +36,8 @@ describe('Expense Tracker', () => {
     cy.addTransaction("direct deposit", "1000").then(id => cy.wrap(id).as('directDeposit'));
     cy.addTransaction("long island", "-5").then(id => cy.wrap(id).as('longIslandId'));
     cy.addTransaction("rum and coke", "-3").then(id => cy.wrap(id).as('rumAndCokeId'));
-    cy.addTransaction("whiskey sour", "-3");
-    cy.checkTransactionCount(4);
-    cy.checkTotals(1000, -11)
+    cy.checkTransactionCount(3);
+    cy.checkTotals(1000, -8)
 
     // act 1
     cy.get('@rumAndCokeId').then(id => {
@@ -46,8 +45,8 @@ describe('Expense Tracker', () => {
     });
     
     // assert 1
-    cy.checkTransactionCount(3);
-    cy.checkTotals(1000, -8)
+    cy.checkTransactionCount(2);
+    cy.checkTotals(1000, -5)
     cy.get('[data-selector="history"]').contains('rum and coke').should('not.exist');
 
     // act 2
@@ -56,8 +55,8 @@ describe('Expense Tracker', () => {
     });
 
     // assert 2
-    cy.checkTransactionCount(2);
-    cy.checkTotals(1000, -3);
+    cy.checkTransactionCount(1);
+    cy.checkTotals(1000, 0);
     cy.get('[data-selector="history"]').contains('long island').should('not.exist');
 
     // act 3
@@ -66,22 +65,23 @@ describe('Expense Tracker', () => {
     });
 
     // assert 3
-    cy.checkTransactionCount(1);
-    cy.checkTotals(0, -3);
+    cy.checkTransactionCount(0);
+    cy.checkTotals(0, 0);
     cy.get('[data-selector="history"]').contains('direct deposit').should('not.exist');
   });
 
   it('loads pre-existing transactions from the database', () => {
     // arrange
     cy.addTransaction("aviation", "-10");
-    cy.checkTransactionCount(1);
-    cy.checkTotals(0, -10)
+    cy.addTransaction("kansas city ice water", "-6");
+    cy.checkTransactionCount(2);
+    cy.checkTotals(0, -16)
 
     // act
     cy.visit('http://localhost:8080')
 
     // assert
-    cy.checkTransactionCount(1);
-    cy.checkTotals(0, -10)
+    cy.checkTransactionCount(2);
+    cy.checkTotals(0, -16)
   });
 });
