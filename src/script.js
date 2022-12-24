@@ -1,4 +1,5 @@
 import './style.css';
+import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -6,10 +7,9 @@ let transactions = []
 
 
 const getTransactions = async () => {
-    let response = await fetch('http://localhost:3000/transactions');
-    if (response.ok) {
-        let result = await response.json();
-        return result;
+    let response = await axios('http://localhost:3000/transactions');
+    if (response.status < 300) {
+        return response.data;
     } else {
         alert(`HTTP error: ${response.status}`);
     }
@@ -31,15 +31,12 @@ const addTransaction = async (e) => {
       amount: +amount.value
     };
 
-    let response = await fetch(`http://localhost:3000/transactions`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(transaction)
-    });
+    const headers = { 'Content-Type': 'application/json' };
+    let response = await axios.post(
+        'http://localhost:3000/transactions', transaction, headers,
+    );
 
-    if (response.ok) {
+    if (response.status < 300) {
         transactions.push(transaction);
         addTransactionDOM(transaction);
         updateTotals();
@@ -109,9 +106,9 @@ const updateTotals = () => {
 const removeTransaction = async (id) => {
   
   const url = `http://localhost:3000/transactions/${id}`;
-  let response = await fetch(url, { method: 'DELETE' });
+  let response = await axios.delete(url);
 
-  if (response.ok) {
+  if (response.status < 300) {
       transactions = transactions.filter(transaction => transaction.id !== id);
       document.getElementById('list').innerHTML = '';
       transactions.forEach(addTransactionDOM);
