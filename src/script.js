@@ -3,11 +3,12 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
 
+axios.defaults.baseURL = 'http://localhost:3000/';
 let transactions = []
 
 
 const getTransactions = async () => {
-    let response = await axios('http://localhost:3000/transactions');
+    let response = await axios('/transactions');
     if (response.status < 300) {
         return response.data;
     } else {
@@ -33,7 +34,7 @@ const addTransaction = async (e) => {
 
     const headers = { 'Content-Type': 'application/json' };
     let response = await axios.post(
-        'http://localhost:3000/transactions', transaction, headers,
+        '/transactions', transaction, headers,
     );
 
     if (response.status < 300) {
@@ -105,7 +106,7 @@ const updateTotals = () => {
 // Remove transaction by ID
 const removeTransaction = async (id) => {
   
-  const url = `http://localhost:3000/transactions/${id}`;
+  const url = `/transactions/${id}`;
   let response = await axios.delete(url);
 
   if (response.status < 300) {
