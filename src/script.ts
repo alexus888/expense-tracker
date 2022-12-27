@@ -14,13 +14,13 @@ axios.defaults.baseURL = 'http://localhost:3000/';
 let transactions: Transaction[] = []
 
 
-const getTransactions = async () => {
+const getTransactions = async (): Promise<Transaction[]> => {
     let response = await axios('/transactions');
     if (response.status < 300) {
         return response.data;
-    } else {
-        alert(`HTTP error: ${response.status}`);
     }
+    alert(`HTTP error: ${response.status}`);
+    return []
 }
 
 
