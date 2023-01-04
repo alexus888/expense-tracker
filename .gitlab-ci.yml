@@ -1,0 +1,14 @@
+stages:
+  - tests
+
+tests:
+  image: moneymeets/cypress-python
+  stage: tests
+  before_script:
+    - export PATH="/root/.local/bin:$PATH"
+  script:
+    - curl -sSL https://install.python-poetry.org | python3 - && poetry install
+    - npm ci
+    - npm run db &
+    - npm run ui &
+    - npm run test-e2e
