@@ -16,7 +16,7 @@
         "@types/uuid": "^9.0.0",
         "babel-loader": "^9.1.0",
         "css-loader": "^6.7.2",
-        "cypress": "^11.2.0",
+        "cypress": "^13.10.0",
         "html-webpack-plugin": "^5.5.0",
         "json-server": "^0.17.1",
         "style-loader": "^3.3.1",
@@ -27,7 +27,7 @@
         "webpack-dev-server": "^4.11.1"
     },
     "dependencies": {
-        "axios": "^1.2.1",
+        "axios": "^1.7.2",
         "uuid": "^9.0.0"
     }
 }
