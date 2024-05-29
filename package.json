@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "Keep track of income and expenses. Add and remove items and save to local storage",
     "scripts": {
-        "db": "json-server --watch db.json",
+        "db": "json-server --watch db.json --host 0.0.0.0",
         "ui": "webpack serve --open",
         "build": "webpack --config webpack.config.js",
         "test-e2e": "cypress run"
