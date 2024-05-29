@@ -4,7 +4,7 @@ describe('Expense Tracker', () => {
   });
 
   beforeEach(() => {
-      cy.visit('http://localhost:8080')
+      cy.visit("/")
   });
 
   afterEach(() => {
@@ -78,7 +78,7 @@ describe('Expense Tracker', () => {
     cy.checkTotals(0, -16)
 
     // act
-    cy.visit('http://localhost:8080')
+    cy.visit("/")
 
     // assert
     cy.checkTransactionCount(2);
