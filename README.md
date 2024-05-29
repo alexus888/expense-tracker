@@ -1,6 +1,8 @@
 ## Expense Tracker
 
-Keep track of income and expenses. Add and remove items and save to JSON server "database".
+I took a toy vanilla JavaScript app (made by YouTuber Traversey Media) and gave it API calls,
+a "backend", and E2E tests. The app keeps track of income and expenses. Add and remove items and
+save to JSON server "database".
 
 ## Environment Setup
 
@@ -8,8 +10,8 @@ Keep track of income and expenses. Add and remove items and save to JSON server 
 1. Run `npm i && poetry install`.
 1. In three separate terminals, start the following processes:
 ```
-npm run serve-db # toy json server
-npm run serve-ui # dev ui
+npm run db # toy json server
+npm run ui # dev ui
 npm run test-e2e # headless e2e tests
 ```
 1. If you want to watch the tests in the test runner, run `npx cypress open` instead.
