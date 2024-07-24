@@ -1,0 +1,20 @@
+run-name: ${{ github.actor }} triggered this workflow.
+on: [push]
+jobs:
+  ci-cd:
+    runs-on: macos-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up environment
+        run: brew install node poetry && npm ci && poetry install
+
+      - name: Set up "database"
+        run: npm run db &
+
+      - name: Run the UI
+        run: npm run ui &
+
+      - name: Run the headless e2e tests
+        run: npm run test-e2e
