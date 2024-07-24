@@ -1,6 +1,6 @@
 ## Expense Tracker
 
-I took a toy vanilla JavaScript app (made by YouTuber Traversey Media) and gave it API calls,
+I took a toy vanilla JavaScript app (made by YouTuber Traversy Media) and gave it API calls,
 a "backend", and E2E tests. The app keeps track of income and expenses. Add and remove items and
 save to JSON server "database".
 
@@ -8,13 +8,17 @@ save to JSON server "database".
 
 1. Install `poetry` using `pipx` if you do not already have it.
 1. Run `npm i && poetry install`.
-1. In three separate terminals, start the following processes:
+1. In two separate terminals, start the `db` and `ui` processes:
 ```
-npm run db # toy json server
-npm run ui # dev ui
-npm run test-e2e # headless e2e tests
+npm run db  # toy json server
+npm run ui  # dev ui
+
 ```
-1. If you want to watch the tests in the test runner, run `npx cypress open` instead.
+1. Run the tests either in the Cypress UI or headlessly:
+```
+npm run test-e2e  # headless e2e tests
+npx cypress open  # start the Cypress ui
+```
 
 ## Project Specifications
 
