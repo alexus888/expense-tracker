@@ -14,7 +14,7 @@ jobs:
         run: npm run db &
 
       - name: Run the UI
-        run: npm run ui &
+        run: npm run dev &
 
       - name: Run the headless e2e tests
         run: npm run test-e2e
