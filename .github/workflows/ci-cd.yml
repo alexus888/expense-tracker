@@ -10,11 +10,14 @@ jobs:
       - name: Set up environment
         run: brew install node poetry && npm ci && poetry install
 
+      - name: Build application
+        run: npm run build
+
       - name: Set up "database"
         run: npm run db &
 
       - name: Run the UI
-        run: npm run dev &
+        run: npm run serve &
 
       - name: Run the headless e2e tests
         run: npm run test-e2e
