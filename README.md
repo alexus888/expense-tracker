@@ -8,10 +8,10 @@ save to JSON server "database".
 
 1. Install `poetry` using `pipx` if you do not already have it.
 1. Run `npm i && poetry install`.
-1. In two separate terminals, start the `db` and `ui` processes:
+1. In two separate terminals, start the `db` and `dev` processes:
 ```
 npm run db  # toy json server
-npm run ui  # dev ui
+npm run dev  # hot reload dev server
 
 ```
 1. Run the tests either in the Cypress UI or headlessly:
