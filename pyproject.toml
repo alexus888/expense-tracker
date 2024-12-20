@@ -2,7 +2,7 @@
 name = "expense-tracker"
 version = "0.1.0"
 description = "Local Python package entrypoint to help create e2e tests for the Expense Tracker app"
-authors = ["Alexus Wong <awong@aledade.com>"]
+authors = ["Alexus Wong <alexus888@gmail.com>"]
 packages = [
     { include = "utilities", from = "lib" },
 ]
