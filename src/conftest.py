@@ -20,6 +20,18 @@ class ExpenseTracker:
         self.page.locator('[data-selector="add-transaction"]').click()
 
     @property
+    def balance(self):
+        return self.page.locator('[data-selector="balance"]')
+
+    @property
+    def income(self):
+        return self.page.locator('[data-selector="income"]')
+
+    @property
+    def expense(self):
+        return self.page.locator('[data-selector="expense"]')
+
+    @property
     def history(self):
         return self.page.locator("ul > li")
 
