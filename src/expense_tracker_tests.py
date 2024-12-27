@@ -1,14 +1,27 @@
 import json
 import pytest
 from os import getenv
-from pathlib import Path
 from playwright.sync_api import Page, expect
+import utilities
+from importlib import resources
 
-# NOTE: this is a hacky way to get the filepath for db.json
-ROOT_DIR = Path(__file__).parents[1]
-JSON_DB = ROOT_DIR / "db.json"
 
+JSON_DB = resources.files(utilities).parents[1] / "db.json"  # type: ignore
 URL = f"http://localhost:{getenv("APP_PORT", "8080")}"
+
+
+class ExpenseTracker:
+    def __init__(self, page: Page):
+        self.page = page
+
+    def add_transaction(self, text: str, amount: int):
+        self.page.locator('[data-selector="text"]').fill(text)
+        self.page.locator('[data-selector="amount"]').fill(str(amount))
+        self.page.locator('[data-selector="add-transaction"]').click()
+
+    @property
+    def history(self):
+        return self.page.locator("ul > li")
 
 
 @pytest.fixture(scope="function", autouse=True)
@@ -23,20 +36,7 @@ def clean_up_database():
 def expense_tracker(page: Page):
     page.goto(URL)
 
-    class _ExpenseTracker:
-        def __init__(self, page: Page):
-            self.page = page
-
-        def add_transaction(self, text: str, amount: int):
-            self.page.locator('[data-selector="text"]').fill(text)
-            self.page.locator('[data-selector="amount"]').fill(str(amount))
-            self.page.locator('[data-selector="add-transaction"]').click()
-
-        @property
-        def history(self):
-            return self.page.locator("ul > li")
-
-    yield _ExpenseTracker(page)
+    yield ExpenseTracker(page)
 
     page.close()
 
