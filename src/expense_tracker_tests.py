@@ -50,7 +50,7 @@ class TestExpenseTracker:
     def test_1(self, expense_tracker):
         expense_tracker.add_transaction("Aviation", 12)
         expense_tracker.add_transaction("Gin and Tonic", 10)
-        assert expense_tracker.history.count() == 2
+        expect(expense_tracker.history).to_have_count(2)
 
 
 """
